@@ -19,9 +19,11 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
   <BrowserRouter>
   <div>
-    <Route exact path="/" component={PostsIndex} />
-    <Route path="/posts/new" component={PostsNew} />
+    <Switch>
+      <Route path="/posts/new" component={PostsNew} /> {/* Bugfix - most specific routes at the top */}
+      <Route exact path="/" component={PostsIndex} />
+    </Switch>
     </div>
-  </BrowserRouter>
+  </BrowserRouter> 
   </Provider>
   , document.querySelector('.container'));
