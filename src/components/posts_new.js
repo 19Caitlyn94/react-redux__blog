@@ -3,26 +3,55 @@ import { Field, reduxForm } from 'redux-form';
 
 
 class PostsNew extends Component {
-    renderTitleField(field) {
+    renderField(field) {
         return (
             <div className="form-group">
-                <lebel>Title</lebel>
+                <label>{field.label}</label>
                 <input
                     className="form-control"{...field.input}
-                    type="text"
+                    type={field.type}
                 />
             </div>
         )
     }
+
     render() {
         return (
             <form>
                 <Field 
+                    label="Title"
+                    type="text"
                     name="title"
-                    component={this.renderTitleField} />
+                    component={this.renderField} />
+                <Field 
+                    label="Categories"
+                    type="text"
+                    name="categories"
+                    component={this.renderField} />
+                <Field 
+                label="Content"
+                    name="content"
+                    component={this.renderField} />
             </form>
         )
     }
 }
 
-export default reduxForm({ form: 'PostsNewForm' })(PostsNew);
+function validate(values) {
+    const errors = {};
+    if (!values.title) {
+        errors.title = "Please enter a title"
+    }
+    if (!values.category) {
+        errors.category = "Please enter a category"
+    }
+    if (!values.content) {
+        errors.content = "Please enter some content"
+    }
+    return errors
+}
+
+export default reduxForm({ 
+    validate, 
+    form: 'PostsNewForm' 
+})(PostsNew);
